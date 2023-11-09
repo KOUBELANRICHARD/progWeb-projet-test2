@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+
+<title>{% if title %} {{title}} {% else %} ZUGUS IOT · A PROPOS{% endif %}</title>
+
+{% block content %}
+<div class="container marketing">
+
+<div class="row mt-5 mb-5">
+    <div class="col-lg-6 shadow p-4">
+        <h3>Veuillez vous connecter : </h3>
+        <form>
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Connecter</button>
+        </form>
+</div>
+</div><!-- /.row -->
+</div>
+
+{% endblock %}
