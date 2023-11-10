@@ -80,23 +80,3 @@ body {
     margin-top: 7rem;
   }
 }
-
-/* Définition des variables de couleur dans votre feuille de style CSS */
-:root {
-  --bs-red-color: #ff0000; /* rouge */
-  --bs-blue-color: #0000ff; /* bleu */
-  --bs-green-color: #00ff00; /* vert */
-}
-
-/* Utilisation des variables pour définir la couleur de remplissage d'éléments SVG ou d'autres éléments graphiques */
-.my-red-element {
-  fill: var(--bs-red-color); /* Utilise la couleur rouge définie */
-}
-
-.my-blue-element {
-  fill: var(--bs-blue-color); /* Utilise la couleur bleue définie */
-}
-
-.my-green-element {
-  fill: var(--bs-green-color); /* Utilise la couleur verte définie */
-}

@@ -1,39 +1,24 @@
 {% extends './base.html' %}
 
-<title>{% if title %} {{title}} {% else %} ZUGUS IOT · CREER UN COMPTE{% endif %}</title>
+{% block title %}
+    {% if title %} {{ title }} {% else %} ZUGUS IOT · CREER UN COMPTE {% endif %}
+{% endblock %}
 
 {% block content %}
-
 <div class="container marketing">
-
     <div class="row mt-5 mb-5">
         <div class="col-lg-6 shadow p-4">
-            <h3>Veuillez creer un compte : </h3>
-            <form>
-                <div class="mb-3">
-                    <label for="exampleInputText1" class="form-label">Nom</label>
-                    <input type="text" class="form-control" id="exampleInputText1" aria-describedby="textHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputText1" class="form-label">Prénoms</label>
-                    <input type="text" class="form-control" id="exampleInputText1" aria-describedby="textHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputText1" class="form-label">Adresse</label>
-                    <input type="text" class="form-control" id="exampleInputText1" aria-describedby="textHelp">
-                </div>
-                <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
+            <h3>Veuillez créer un compte : </h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Soumettre</button>
             </form>
-    </div>
+        </div>
+        
+        <div class="col-lg-6 shadow p-4">
+            <img src="../../static/images/cart1.jpg" width="100%" height="100%"/>
+        </div>
     </div><!-- /.row -->
-    </div>
-
+</div>
 {% endblock %}
