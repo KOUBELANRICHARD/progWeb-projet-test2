@@ -3,12 +3,7 @@
 <title> ZUGUS IOT · Acceuil</title>
 
 {% block content %}
-{% if request.user.is_authenticated %}
-    Bonjour, {{ request.user.first_name }}!
-    <a href="{% url 'Logout' %}">Déconnexion</a>
-{% else %}
-    <a href="{% url 'Login' %}">Connexion</a>
-{% endif %}
+<h2>Liste des Dispositifs</h2>
 
 
 
@@ -26,7 +21,7 @@
          <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
             <button type="button" class="btn btn-sm btn-outline-secondary">{{ dispositif.type }}</button>
-            <button type="button" class="btn btn-sm btn-outline-primary">Choisir</button>
+            <a href="{% url 'ajouter_dispositif' dispositif.id_dispositif %}" class="btn btn-outline-primary btn-sm">Choisir</a>
           </div>
           
         </div>

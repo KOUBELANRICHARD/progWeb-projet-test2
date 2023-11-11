@@ -1,0 +1,11 @@
+<!-- confirmation_dispositif.html -->
+
+{% extends './base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Confirmation</h2>
+    <p>Votre dispositif a été ajouté avec succès.</p>
+    <a href="{% url 'liste_dispositifs_utilisateur' %}" class="btn btn-primary">Voir mes dispositifs</a>
+</div>
+{% endblock %}

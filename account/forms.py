@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from .models import UserDispositif
+
 
 User = get_user_model()
 
@@ -41,4 +43,9 @@ class CustomAuthenticationForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data
+    
+class UserDispositifForm(forms.ModelForm):
+    class Meta:
+        model = UserDispositif
+        fields = ['localisation']
 

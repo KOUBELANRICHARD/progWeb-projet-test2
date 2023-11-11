@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Dispositif
+from .models import User, Dispositif, UserDispositif
 
 # Enregistrez votre modèle utilisateur avec l'interface d'administration
 admin.site.register(User, UserAdmin)
+admin.site.register(UserDispositif)
 
 @admin.register(Dispositif)
 class DispositifAdmin(admin.ModelAdmin):

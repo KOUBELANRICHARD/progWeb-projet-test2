@@ -1,0 +1,45 @@
+{% extends './base.html' %}
+
+
+            {% block content %}
+
+            <div class="album py-5 bg-body-tertiary">
+                <h2>Mes Dispositifs</h2>
+                <div class="container">
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% if user_dispositifs %}
+                        {% for ud in user_dispositifs %}
+                            <div class="col">
+                            <div class="card shadow-sm">
+                            <img src="{{ ud.dispositif.image.url }}"  width="100%" height="225" alt="{{ ud.dispositif.nom}}">
+                            <div class="card-body">
+                            <h2>{{ ud.dispositif.nom }}</h2>
+                            <p class="card-text">{{ ud.dispositif.description }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">Code: {{ ud.code }}</small>
+                            <small class="text-muted">- {{ ud.localisation }}</small>
+                            <a href="{% url 'modifier_dispositif' ud.id %}" class="btn btn-outline-secondary btn-sm">Modifier</a>
+                           
+                            <div class="btn-group">
+                                {% if ud.dispositif.type == "CAPTEUR" %}
+                                <button type="button" class="btn btn-sm btn-outline-info">Visualiser</button>
+                                {% else %}
+                                <button type="button" class="btn btn-sm btn-outline-warning">Commander</button>
+                                {% endif %}
+                                <a href="{% url 'supprimer_dispositif' ud.id %}" class="btn btn-outline-danger btn-sm">Supprimer</a>
+                            </div>
+                            
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            
+                        {% endfor %}                     
+                    {% else %}
+                        <p>Vous n'avez pas encore choisi de dispositifs.</p>
+                    {% endif %}
+                </div>
+                </div>
+                </div>
+
+            {% endblock %}

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
+import random
+import string
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=True, null=True)
@@ -13,9 +15,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
-from django.db import models
-import random
-import string
 
 class Dispositif(models.Model):
     # Définissez vos choix comme des constantes de classe
@@ -33,7 +32,7 @@ class Dispositif(models.Model):
     description = models.TextField()
     localisation = models.CharField(max_length=200, blank=True)
     code = models.CharField(max_length=4, blank=True)
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dispositifs')
+    
 
     def save(self, *args, **kwargs):
         if not self.code:
@@ -44,3 +43,13 @@ class Dispositif(models.Model):
         return self.nom
     
 
+class UserDispositif(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    dispositif = models.ForeignKey(Dispositif, on_delete=models.CASCADE)
+    code = models.CharField(max_length=4, blank=True)
+    localisation = models.CharField(max_length=200, blank=True)  # Ajout du champ localisation
+        
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
+        super(UserDispositif, self).save(*args, **kwargs)
