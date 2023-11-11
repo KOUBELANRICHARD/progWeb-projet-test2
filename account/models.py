@@ -3,6 +3,8 @@ from django.db import models
 from django.conf import settings
 import random
 import string
+from datetime import datetime
+
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, blank=True, null=True)
@@ -53,3 +55,12 @@ class UserDispositif(models.Model):
         if not self.code:
             self.code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
         super(UserDispositif, self).save(*args, **kwargs)
+        
+class DonneeCapteur(models.Model):
+    user_dispositif = models.ForeignKey(UserDispositif, on_delete=models.CASCADE)
+    valeur = models.FloatField()
+    date_heure = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return f"{self.user_dispositif.dispositif.nom} - {self.date_heure}"
+

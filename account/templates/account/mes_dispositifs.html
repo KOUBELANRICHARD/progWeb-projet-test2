@@ -22,7 +22,7 @@
                            
                             <div class="btn-group">
                                 {% if ud.dispositif.type == "CAPTEUR" %}
-                                <button type="button" class="btn btn-sm btn-outline-info">Visualiser</button>
+                                <a href="{% url 'visualiser_capteur' ud.id %}" class="btn btn-outline-info btn-sm">Visualiser</a>
                                 {% else %}
                                 <button type="button" class="btn btn-sm btn-outline-warning">Commander</button>
                                 {% endif %}

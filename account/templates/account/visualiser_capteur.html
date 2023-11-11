@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ user_dispositif.dispositif.nom }}</h2>
+    <p>Localisation: {{ user_dispositif.dispositif.localisation }}</p>
+    <p>Code: {{ user_dispositif.code }}</p>
+    <p>Type: {{ user_dispositif.dispositif.type }}</p>
+    <p>Description: {{ user_dispositif.dispositif.description }}</p>
+
+    <h3>20 Derniers Enregistrements</h3>
+    <table>
+        <tr>
+            <th>Date/Heure</th>
+            <th>Valeur</th>
+        </tr>
+        {% for donnee in donnees %}
+        <tr>
+            <td>{{ donnee.date_heure }}</td>
+            <td>{{ donnee.valeur }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -5,8 +5,11 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserDispositifForm
-from .models import Dispositif, UserDispositif
+from .models import Dispositif, UserDispositif, DonneeCapteur
 from django.shortcuts import get_object_or_404, redirect
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import DonneeCapteurSerializer
 
 # Vues basées sur des fonctions avec login_required
 @login_required(login_url='/Login/')
@@ -107,6 +110,49 @@ def modifier_dispositif(request, user_dispositif_id):
         form = UserDispositifForm(instance=user_dispositif)
 
     return render(request, 'account/modifier_dispositif.html', {'form': form})
+
+
+
+@api_view(['POST'])
+def recevoir_donnee(request):
+    # Vous devez identifier le UserDispositif correspondant ici
+    # Par exemple, en utilisant un code de dispositif
+    code_dispositif = request.data.get('code_dispositif')
+    user_dispositif = UserDispositif.objects.filter(code=code_dispositif).first()
+
+    if user_dispositif is None:
+        return Response({'error': 'Dispositif non trouvé'}, status=404)
+
+    serializer = DonneeCapteurSerializer(data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save(user_dispositif=user_dispositif)
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+
+@api_view(['POST'])
+def recevoir_donnees(request):
+    serializer = DonneeCapteurSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)
+
+from django.shortcuts import render, get_object_or_404
+from .models import UserDispositif, DonneeCapteur
+
+@login_required
+def visualiser_capteur(request, user_dispositif_id):
+    user_dispositif = get_object_or_404(UserDispositif, pk=user_dispositif_id, user=request.user)
+    donnees = DonneeCapteur.objects.filter(user_dispositif=user_dispositif).order_by('-date_heure')[:20]
+
+    context = {
+        'user_dispositif': user_dispositif,
+        'donnees': donnees
+    }
+    return render(request, 'visualiser_capteur.html', context)
+
+
 
 
 
