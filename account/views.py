@@ -117,8 +117,7 @@ def modifier_dispositif(request, user_dispositif_id):
 
 @api_view(['POST'])
 def recevoir_donnee(request):
-    # Vous devez identifier le UserDispositif correspondant ici
-    # Par exemple, en utilisant un code de dispositif
+    # Identification des dispositifs
     code_dispositif = request.data.get('code_dispositif')
     user_dispositif = UserDispositif.objects.filter(code=code_dispositif).first()
 
