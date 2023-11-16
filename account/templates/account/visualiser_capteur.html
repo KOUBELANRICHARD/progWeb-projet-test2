@@ -1,4 +1,5 @@
-{% extends 'base.html' %}
+{% extends './base.html' %}
+
 
 {% block content %}
 <div class="container">
@@ -9,17 +10,21 @@
     <p>Description: {{ user_dispositif.dispositif.description }}</p>
 
     <h3>20 Derniers Enregistrements</h3>
-    <table>
-        <tr>
-            <th>Date/Heure</th>
-            <th>Valeur</th>
+    <table id="tablevisualisation" class="table table-striped" style="width:100%">
+        <thead>
+          <tr>
+            <th scope="col">Date/Heure</th>
+            <th scope="col">Valeur</th>
         </tr>
+        </thead>
+        </tbody>
         {% for donnee in donnees %}
         <tr>
             <td>{{ donnee.date_heure }}</td>
             <td>{{ donnee.valeur }}</td>
         </tr>
         {% endfor %}
+    </tbody>
     </table>
 </div>
 {% endblock %}

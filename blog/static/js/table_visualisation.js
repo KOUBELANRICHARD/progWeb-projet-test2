@@ -1,0 +1,3 @@
+$('#tablevisualisation').dataTable( {
+  "searching": true
+} );

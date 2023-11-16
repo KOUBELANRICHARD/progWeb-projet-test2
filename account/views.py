@@ -5,11 +5,13 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserDispositifForm
-from .models import Dispositif, UserDispositif, DonneeCapteur
+from .models import Dispositif, UserDispositif, DonneeCapteur, User
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import DonneeCapteurSerializer
+from .serializers import DonneeCapteurSerializer, DonneeUserDispositifSerializer, DonneeUserSerializer, DonneeDispositifSerializer
+from django.http import JsonResponse
+from rest_framework.views import APIView
 
 # Vues basées sur des fonctions avec login_required
 @login_required(login_url='/Login/')
@@ -128,19 +130,32 @@ def recevoir_donnee(request):
         serializer.save(user_dispositif=user_dispositif)
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
+    return JsonResponse({'status': 'success'})
 
+class DonneeCapteurList(APIView):
+    def get(self, request, format=None):
+        donnees = DonneeCapteur.objects.all()
+        serializer = DonneeCapteurSerializer(donnees, many=True)
+        return Response(serializer.data)
+    
+class DonneeUserList(APIView):
+    def get(self, request, format=None):
+        donnees = User.objects.all()
+        serializer = DonneeUserSerializer(donnees, many=True)
+        return Response(serializer.data)
+    
+class DonneeDispositifList(APIView):
+    def get(self, request, format=None):
+        donnees = Dispositif.objects.all()
+        serializer = DonneeDispositifSerializer(donnees, many=True)
+        return Response(serializer.data)
 
-@api_view(['POST'])
-def recevoir_donnees(request):
-    serializer = DonneeCapteurSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=201)
-    return Response(serializer.errors, status=400)
-
-from django.shortcuts import render, get_object_or_404
-from .models import UserDispositif, DonneeCapteur
-
+class DonneeUserDispositifList(APIView):
+    def get(self, request, format=None):
+        donnees = UserDispositif.objects.all()
+        serializer = DonneeUserDispositifSerializer(donnees, many=True)
+        return Response(serializer.data)
+    
 @login_required
 def visualiser_capteur(request, user_dispositif_id):
     user_dispositif = get_object_or_404(UserDispositif, pk=user_dispositif_id, user=request.user)
@@ -150,7 +165,14 @@ def visualiser_capteur(request, user_dispositif_id):
         'user_dispositif': user_dispositif,
         'donnees': donnees
     }
-    return render(request, 'visualiser_capteur.html', context)
+    return render(request, 'account/visualiser_capteur.html', context)
+
+
+
+
+
+   
+
 
 
 
