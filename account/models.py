@@ -19,7 +19,7 @@ class User(AbstractUser):
 
 
 class Dispositif(models.Model):
-    # Définissez vos choix comme des constantes de classe
+    
     TYPE_CAPTEUR = 'CAPTEUR'
     TYPE_ACTUATEUR = 'ACTUATEUR'
     TYPE_CHOICES = (
